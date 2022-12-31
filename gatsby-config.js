@@ -11,6 +11,7 @@ const siteMetadata = {
 module.exports = {
   siteMetadata,
   plugins: [
+    `gatsby-plugin-theme-ui`,
     "gatsby-plugin-sass", 
     "gatsby-plugin-mdx", 
     {

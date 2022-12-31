@@ -4,7 +4,7 @@ import { useSiteMetadata } from "../hooks/use-site-metadata";
 const links = require('../data/links')
 
 const pageStyles = {
-  color: "#232129",
+  color: "#FFF",
   padding: 96,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
