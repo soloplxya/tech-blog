@@ -1,0 +1,75 @@
+---
+title: LeetCode 980 Unique Paths III
+date: "2022-12-31"
+description: "Daily Streak Day 14"
+---
+
+Today's question was about finding the number of paths to reach the ending square in a grid. You can find more specifics about the question
+in this [link]https://leetcode.com/problems/unique-paths-iii/description/.
+
+For this question, I decided to use a backtracking search algorithm to solve the question. 
+
+- Step 1: I wanted to identify the starting cell, the ending cell as well as the count of non-obstacle cells in the grid. I did a for-loop
+that ran through the whole grid in a function ```locateStartingSquare```.
+
+```javascript
+    var locateStartingSquare = function(grid) {
+        var start_coor = [0,0]
+        var count = 0
+        for (let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] === 1) start_coor = [i,j] // return upon finding 1
+                if (grid[i][j] === 0) count += 1
+                if (grid[i][j] == 2) end_coor = [i,j]
+            }
+        }
+        return [start_coor, count, end_coor]
+    }
+```
+
+I then implemented the backtracking algorithm starting with the x and y coordinates of the start point. After visiting a certain cell, I will mark the cell
+as ```Infinity``` so as to indicate that the cell has been visited before. This ensures that every cell is only visited once at any point.
+To check that all the non-obstacle cells have been visited, I maintain a count that will be incremented every time a cell is visited. 
+
+The backtracking algorithm only returns if two conditions are met: 
+1. We reach the ending point. 
+2. The count we are maintaining matches the overall count of the number of non-obstacle cells in the grid.
+
+```javascript
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var uniquePathsIII = function(grid) {
+    const dirs = [[-1, 0], [0, 1], [1, 0], [0, -1]];
+    var values = locateStartingSquare(grid) // locate the starting cell
+    var startingSquare = values[0]
+    var count = values[1] + 1
+    var end = values[2]
+
+
+    var results = 0
+
+    function backtrack(x, y, p) {
+        if (grid[x][y] === -1 || grid[x][y] === Infinity) return;
+
+        if (x === end[0] && y === end[1] && p === count) {
+            results++;
+            return;
+        }
+
+        grid[x][y] = Infinity;
+        for (const [di, dj] of dirs) {
+            const i = x + di;
+            const j = y + dj;
+            if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length) continue;
+            backtrack(i, j, p + 1);
+        }
+        grid[x][y] = 0;
+    }
+
+    backtrack(startingSquare[0], startingSquare[1], 0)
+    return results
+};
+```
+
