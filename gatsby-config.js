@@ -1,11 +1,15 @@
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
+
+const siteMetadata = {
+  title: `Shaine's Tech Blog`,
+  description: `Place for me to share new things I have learnt`,
+  siteUrl: `https://www.yourdomain.tld`
+}
+
 module.exports = {
-  siteMetadata: {
-    title: `My Tech Blog`,
-    siteUrl: `https://www.yourdomain.tld`
-  },
+  siteMetadata,
   plugins: [
     "gatsby-plugin-sass", 
     "gatsby-plugin-mdx", 
